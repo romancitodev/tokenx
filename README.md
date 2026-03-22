@@ -116,16 +116,12 @@ async fn main() {
 
     // 3. Simulate Incoming Request (e.g., from a client SDK)
     let incoming_api_key = "pk_live_12345".to_string();
-    println!("🌍 Service A: Received request with key '{}'", incoming_api_key);
+    println!("Service A: Received request with key '{}'", incoming_api_key);
 
     // 4. Resolve the token
     if let Some(upstream_jwt) = token_proxy.handle_request(incoming_api_key).await {
-        println!("✅ Resolution Success! Forwarding to Upstream...");
-
-        // 5. Call Upstream Service B (e.g., an LLM Engine)
-        //    Here we use the resolved 'upstream_jwt' to authenticate.
-        
-        /* Pseudocode using reqwest:
+        println!("Resolution Success! Forwarding to Upstream...");
+    // 5. Call Upstream Service B (e.g., an LLM Engine)
         let response = reqwest::Client::new()
             .post("https://llm-engine.internal/v1/chat/completions")
             .bearer_auth(upstream_jwt) // <--- Authentication injected here
@@ -135,11 +131,9 @@ async fn main() {
             }))
             .send()
             .await?;
-        */
-
-        println!("📡 Request sent to Service B with Authorization: Bearer {}", upstream_jwt);
+        println!("Request sent to Service B with Authorization: Bearer {}", upstream_jwt);
     } else {
-        println!("⛔ Resolution Failed: Access Denied");
+        println!("Resolution Failed: Access Denied");
     }
 }
 ```
