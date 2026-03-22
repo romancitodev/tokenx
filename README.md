@@ -89,7 +89,7 @@ struct MetricsHook {
 }
 
 impl AsyncHook<String, DefaultAuditEvent> for MetricsHook {
-    // Pre-hook: Runs BEFORE resolution. Good for rate limiting or metrics.
+    // Pre-hook: Runs BEFORE resolution. Good for metrics.
     fn pre_hook(&self, _token: &String) -> BoxFuture<'_, ()> {
         let c = self.attempts.clone();
         Box::pin(async move {
